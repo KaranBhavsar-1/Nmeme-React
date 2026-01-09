@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "./Button";
 import AddMoreIcon from "../../assets/images/Add_More.png";
-import { useMeme } from "../FetchMemesAPI/MemeCOntext";
+import { useMeme } from "../FetchMemesAPI/MemeContext";
 
 function Browse() {
   const { memeType, setMemeType } = useMeme();

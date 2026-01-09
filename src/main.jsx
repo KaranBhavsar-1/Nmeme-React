@@ -12,7 +12,7 @@ import Browse from "./Component/BrowsePage/Browse";
 import LikedMemePage from "./Component/LikedPage/LikedMemePage";
 import Settings from "./Component/Settings/Settings";
 import Layout from "./Component/Layout/Layout";
-import { MemeProvider } from "./Component/FetchMemesAPI/MemeCOntext";
+import { MemeProvider } from "./Component/FetchMemesAPI/MemeContext";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>

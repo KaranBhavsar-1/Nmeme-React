@@ -1,6 +1,6 @@
 import likeImg from "/src/assets/images/LikeMeme.png";
 import likedImg from "/src/assets/images/LikedMeme.png";
-import { useMeme } from "../../FetchMemesAPI/MemeCOntext";
+import { useMeme } from "../../FetchMemesAPI/MemeContext";
 
 function LikeButton({ meme }) {
   const { toggleLike, isLiked } = useMeme();

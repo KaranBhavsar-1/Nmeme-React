@@ -1,4 +1,4 @@
-import { useMeme } from "../FetchMemesAPI/MemeCOntext";
+import { useMeme } from "../FetchMemesAPI/MemeContext";
 
 function LikedMemePage() {
   const { likedMemes, toggleLike } = useMeme();

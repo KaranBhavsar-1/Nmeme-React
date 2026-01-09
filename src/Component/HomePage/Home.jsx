@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import MemeCard from "./MemeCard/MemeCard";
-import { useMeme } from "../FetchMemesAPI/MemeCOntext";
+import { useMeme } from "../FetchMemesAPI/MemeContext";
 
 function Home() {
   const {
