@@ -1,5 +1,5 @@
 import { useState } from "react";
-import downloadIcon from "../../assets/images/LikeMeme.png "; // adjust path
+import downloadIcon from "../../assets/images/LikeMeme.png"; // adjust path
 
 function DownloadButton() {
   const [animate, setAnimate] = useState(false);
