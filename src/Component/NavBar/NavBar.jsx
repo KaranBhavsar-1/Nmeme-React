@@ -40,7 +40,8 @@ export default function BottomNav() {
         <li className="flex-1">
           <NavLink to="/browse" className={linkClasses}>
             <img
-              src="/src/assets/images/browse.png"
+              // src="/src/assets/images/browse.png"
+              src={browseIcon}
               alt="Browse"
               className="w-6 h-6 mb-1 sm:w-5 sm:h-5"
             />
@@ -51,7 +52,8 @@ export default function BottomNav() {
         <li className="flex-1">
           <NavLink to="/likedmemes" className={linkClasses}>
             <img
-              src="/src/assets/images/like.png"
+              // src="/src/assets/images/like.png"
+              src={likeIcon}
               alt="Liked Memes"
               className="w-6 h-6 mb-1 sm:w-5 sm:h-5"
             />
@@ -62,7 +64,8 @@ export default function BottomNav() {
         <li className="flex-1">
           <NavLink to="/settings" className={linkClasses}>
             <img
-              src="/src/assets/images/setting.png"
+              // src="/src/assets/images/setting.png"
+              src={settingIcon}
               alt="Settings"
               className="w-6 h-6 mb-1 sm:w-5 sm:h-5"
             />

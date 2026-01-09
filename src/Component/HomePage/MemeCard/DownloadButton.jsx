@@ -1,5 +1,5 @@
 import { useState } from "react";
-// import downloadIcon from "src/assets/images/LikeMeme.png "; // adjust path
+import downloadIcon from "../../assets/images/LikeMeme.png "; // adjust path
 
 function DownloadButton() {
   const [animate, setAnimate] = useState(false);
@@ -21,7 +21,8 @@ function DownloadButton() {
       "
     >
       <img
-        src={"src/assets/images/DownloadButton.png"}
+        // src={"src/assets/images/DownloadButton.png"}
+        src={downloadIcon}
         alt="Download"
         className={`
           w-7 h-7
