@@ -23,7 +23,7 @@ function Home() {
   useEffect(() => {
     if (!memetype) {
       setMemeType("catmemes");
-      localStorage.setItem("memeType", "catmemes");
+      localStorage.setItem("memetype", "catmemes");
     }
   }, [memeType, setMemeType]);
 
