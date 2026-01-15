@@ -5,7 +5,7 @@ const MemeContext = createContext();
 
 export function MemeProvider({ children }) {
   const [memeType, setMemeType] = useState(
-    localStorage.getItem("MemeType") || "/CatMemes"
+    localStorage.getItem("MemeType") || "CatMemes"
   );
 
   const [likedMemes, setLikedMemes] = useState(() => {
