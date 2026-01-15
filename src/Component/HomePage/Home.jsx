@@ -13,6 +13,8 @@ function Home() {
   const {
     meme,
     fetchMeme,
+     memeType,        // ✅ ADD THIS
+  setMemeType, 
     currentMemeNo,
     setCurrentMemeNo,
   } = useMeme();
