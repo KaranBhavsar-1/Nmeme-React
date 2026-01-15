@@ -1,20 +1,39 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function useGetMeme(memetype) {
   const [meme, setMeme] = useState(null);
+  const [error, setError] = useState(null);
+  const fetching = useRef(false);
 
   const fetchMeme = async () => {
-    if (!memetype) return;
+    if (!memetype || fetching.current) return;
 
-    const res = await fetch(`https://meme-api.com/gimme${memetype}/50`);
-    const data = await res.json();
-    setMeme(data);
+    fetching.current = true;
+    setError(null);
+
+    try {
+      const res = await fetch(
+        `https://meme-api.com/gimme/${memetype}/50`
+      );
+
+      if (!res.ok) {
+        throw new Error("API unavailable");
+      }
+
+      const data = await res.json();
+      setMeme(data);
+
+    } catch (err) {
+      setError("Meme API is currently down. Try again later.");
+      setMeme(null);
+    } finally {
+      fetching.current = false;
+    }
   };
 
-  // 🔥 IMPORTANT: depend on memetype
   useEffect(() => {
     fetchMeme();
   }, [memetype]);
 
-  return { meme, fetchMeme };
+  return { meme, error, fetchMeme };
 }

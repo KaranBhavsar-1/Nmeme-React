@@ -2,19 +2,34 @@ import React, { useEffect } from "react";
 import MemeCard from "./MemeCard/MemeCard";
 import { useMeme } from "../FetchMemesAPI/MemeContext";
 
+const DEFAULT_MEME = {
+  url: "",
+  title: "subreddit not found",
+  subreddit: "subreddit not found",
+  postLink: "subreddit not found",
+};
+
 function Home() {
   const {
     meme,
     fetchMeme,
     currentMemeNo,
-    setCurrentMemeNo
+    setCurrentMemeNo,
   } = useMeme();
 
-  // Safe next button handler
-  const handleNext = async () => {
-    if (!meme || !meme.memes) return;
+  const memes = meme?.memes || [];
+  const hasMemes = memes.length > 0;
 
-    if (currentMemeNo < meme.memes.length - 1) {
+  const currentMeme = hasMemes
+    ? memes[currentMemeNo]
+    : DEFAULT_MEME;
+
+  const count = hasMemes ? meme.count : 0;
+
+  const handleNext = async () => {
+    if (!hasMemes) return;
+
+    if (currentMemeNo < memes.length - 1) {
       setCurrentMemeNo(currentMemeNo + 1);
     } else {
       await fetchMeme();
@@ -22,50 +37,53 @@ function Home() {
     }
   };
 
-    // Safe Back button handler
- const handleBack = () => {
-  if (!meme || !meme.memes) return;
+  const handleBack = () => {
+    if (!hasMemes) return;
 
-  if (currentMemeNo > 0) {
-    // Just go to the previous meme
-    setCurrentMemeNo(currentMemeNo - 1);
-  } else {
-    // Optional: wrap around to last meme
-    setCurrentMemeNo(meme.memes.length - 1);
-  }
-};
+    if (currentMemeNo > 0) {
+      setCurrentMemeNo(currentMemeNo - 1);
+    } else {
+      setCurrentMemeNo(memes.length - 1);
+    }
+  };
 
-
-
-  // Reset currentMemeNo if meme array changes
   useEffect(() => {
-    if (meme && meme.memes && currentMemeNo >= meme.memes.length) {
+    if (hasMemes && currentMemeNo >= memes.length) {
       setCurrentMemeNo(0);
     }
-  }, [meme, currentMemeNo, setCurrentMemeNo]);
-
-  // Loading state
-  if (!meme || !meme.memes || !meme.memes.length) {
-    return <div className="text-center mt-20 text-xl">Loading memes...</div>;
-  }
+  }, [memes, currentMemeNo, hasMemes, setCurrentMemeNo]);
 
   return (
     <div className="flex flex-col items-center p-4">
       <MemeCard
-        Meme={meme.memes[currentMemeNo]}
-        count={meme.count}
-        currentMemeNo={currentMemeNo}
+        Meme={currentMeme}
+        count={count}
+        currentMemeNo={hasMemes ? currentMemeNo : -1}
+        isEmpty={!hasMemes}
       />
 
       <div className="flex justify-center mt-2">
         <button
-          className="bg-blue-600 px-4 py-2 rounded text-white font-semibold hover:bg-blue-700 transition mx-2"
+          disabled={!hasMemes}
+          className={`px-4 py-2 rounded font-semibold mx-2
+            ${
+              hasMemes
+                ? "bg-blue-600 text-white hover:bg-blue-700"
+                : "bg-gray-400 text-gray-700 cursor-not-allowed"
+            }`}
           onClick={handleBack}
         >
           Back
         </button>
+
         <button
-          className="bg-blue-600 px-4 py-2 rounded text-white font-semibold hover:bg-blue-700 transition"
+          disabled={!hasMemes}
+          className={`px-4 py-2 rounded font-semibold
+            ${
+              hasMemes
+                ? "bg-blue-600 text-white hover:bg-blue-700"
+                : "bg-gray-400 text-gray-700 cursor-not-allowed"
+            }`}
           onClick={handleNext}
         >
           Next Meme

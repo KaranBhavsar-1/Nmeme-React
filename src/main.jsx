@@ -25,9 +25,9 @@ const router = createBrowserRouter(
   )
 );
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
+  // <StrictMode>
     <MemeProvider>
       <RouterProvider router={router} />
     </MemeProvider>
-  </StrictMode>
+  // {/* </StrictMode> */}
 );

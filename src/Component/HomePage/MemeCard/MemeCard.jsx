@@ -1,89 +1,102 @@
 import LikeButton from "./LikeButton";
 import DownloadButton from "./DownloadButton";
 
-export default function MemeCard({Meme,count,currentMemeNo}) {
+const FALLBACK_MEME = {
+  url: "",
+  title: "subreddit not found",
+  subreddit: "subreddit not found",
+  postLink: "subreddit not found",
+};
+
+export default function MemeCard({
+  Meme,
+  count = 0,
+  currentMemeNo = -1,
+  isEmpty = true,
+}) {
+  // ✅ HARD SAFETY GUARD
+  const safeMeme = Meme ?? FALLBACK_MEME;
+
   return (
     <div className="flex justify-center">
-      {/* CARD CONTAINER */}
       <div
         id="memeBox"
-        tabIndex={0}
         className="
-          mt-2
-          relative
+          mt-2 relative
           w-[380px] h-[520px]
           border-2 border-[#333]
           rounded-[10px]
           overflow-hidden
           flex flex-col
-          
         "
       >
         {/* IMAGE AREA */}
-        <div className="flex-1 flex items-center justify-center bg-transparent">
-          <img
-            id="image"
-            src={Meme.url}
-            alt="Meme"
-            // className="max-w-full max-h-full object-contain"
-            className="max-h-[420px] w-auto object-contain"
-          />
+        <div className="flex-1 flex items-center justify-center bg-gray-200">
+          {safeMeme.url ? (
+            <img
+              src={safeMeme.url}
+              alt="Meme"
+              className="max-h-[420px] w-auto object-contain"
+            />
+          ) : (
+            <span className="text-gray-600 text-sm">
+              No meme available
+            </span>
+          )}
         </div>
 
-        {/* TEXT AREA (NOW BELOW IMAGE) */}
-        <div
-          className="
-            px-3 py-2
-            text-black
-            bg-gray-400
-            min-h-[120px]
-            flex flex-col
-            items-start
-            text-left
-            overflow-y-auto
-          "
-        >
-          <h3 className="text-[18px] font-semibold my-[2px]">
-            {Meme.subreddit}
+        {/* TEXT AREA */}
+        <div className="px-3 py-2 bg-gray-400 min-h-[120px]">
+          <h3 className="text-[18px] font-semibold">
+            {safeMeme.subreddit}
           </h3>
 
-          <h2 className="text-[16px] my-[2px]">
-             {Meme.title}
+          <h2 className="text-[16px]">
+            {safeMeme.title}
           </h2>
 
-          <h2 className="text-[14px] my-[2px] text-blue-800 underline break-all">
-             {Meme.postLink}
+          <h2 className="text-[14px] text-blue-800 underline break-all">
+            {safeMeme.postLink}
           </h2>
         </div>
 
         {/* MEME COUNT */}
         <div
-          id="memeCount"
           className="
             absolute top-[10px] right-[10px]
-            bg-white/80
-            px-2 py-1
-            rounded-md
-            font-bold text-[14px]
-            text-black
-            pointer-events-none
-            select-none
-            z-20
+            bg-white/80 px-2 py-1
+            rounded-md font-bold text-[14px]
+            text-black pointer-events-none
+            select-none z-20
           "
         >
-          Memes Count=  {currentMemeNo+1}/{count}
+          Memes Count= {isEmpty ? "0/0" : `${currentMemeNo + 1}/${count}`}
         </div>
 
         {/* ACTION BUTTONS */}
-        <div
-          className="
-            absolute right-[10px] bottom-[140px]
-            flex flex-col gap-5 z-20
-          "
-        >
-          <LikeButton meme={Meme} />
-          <DownloadButton />
-        </div>
+        
+        {!isEmpty && safeMeme.url && (
+          <div className="absolute right-[10px] bottom-[140px] flex flex-col gap-5">
+            <LikeButton meme={safeMeme} />
+            {/* <DownloadButton /> */}
+            <DownloadButton
+  url={Meme.url}
+  title={Meme.title || "meme"}
+  />
+          </div>
+        )}
+        {/* 
+        {!isEmpty && (
+  <div className="absolute right-[10px] bottom-[140px] flex flex-col gap-5 z-20">
+    <LikeButton meme={Meme} />
+    <DownloadButton
+      url={Meme.url}
+      title={Meme.title}
+    />
+  </div>
+)}
+        */}
+        
       </div>
     </div>
   );
